@@ -1,0 +1,27 @@
+{
+  "name": "nftdemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon scripts/test.ts",
+    "mintNFT" : "nodemon scripts/mintNFT.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@alch/alchemy-web3": "^1.4.7",
+    "@openzeppelin/contracts": "^5.0.1",
+    "@types/dotenv": "^8.2.0",
+    "hardhat": "^2.19.5",
+    "web3": "^4.4.0",
+    "web3-utils": "^4.1.1"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.4",
+    "ethers": "^6.10.0"
+  }
+}
