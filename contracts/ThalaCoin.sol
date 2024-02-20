@@ -25,8 +25,19 @@ contract ThalaCoin is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Burnable
         _;
     }
 
-    function safeMint(address to, string memory uri) public RestrictionForMaxMinting {
+    function DynamicNftPricing(uint supply) internal view  returns (uint _cost) {
+        if(supply <50)
+            return 0.04 ether;
+        if(supply < 100)
+            return 0.08 ether;
+        if (supply <= MAX_MINT) 
+            return 0.1 ether;
+    }
+
+    function safeMint(address to, string memory uri) public payable RestrictionForMaxMinting {
         uint256 tokenId = _nextTokenId++;
+        uint256 supply = totalSupply();
+        require(msg.value >= DynamicNftPricing(supply),"Not enough funds!");
         User memory _user = User({
             _Count : tokenId
         });
