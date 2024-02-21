@@ -1,38 +1,29 @@
-import axios from "axios"
-import FormData from 'form-data'
-import fs from 'fs'
-import dotenv from 'dotenv'
-dotenv.config()
+import {exec} from 'child_process'
+import express from 'express'
 
-const JWT = process.env.PINATA_JWT
+const app  = express()
+const PORT = 3000
 
-async function main() {
-  try{
-  const formData = new FormData();
-  
-  const file = fs.readFileSync('nftpic.png')
-  formData.append('file', file)
-  
-  const pinataMetadata = JSON.stringify({
-    name: 'File name',
-  });
-  formData.append('pinataMetadata', pinataMetadata);
-  
-  const pinataOptions = JSON.stringify({
-    cidVersion: 1,
+function runCommand() : void {
+  exec('npx hardhat run --network sepolia scripts/deploy.ts',(error, stdout, stderr)=>{
+    if (error) {
+      console.error(`Error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
   })
-  formData.append('pinataOptions', pinataOptions);
-
-    const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", formData, {
-      headers: {
-        Authorization: `Bearer ${JWT}`,
-        "Content-Type":"multipart/form-data"
-      }
-    });
-    console.log(res.data);
-  } catch (error) {
-    console.log(error);
-  }
 }
 
-main()
+app.get('/',(req,res):void=>{
+  res.send('<button onclick="runCommand()">Run Command</button>')
+})
+
+app.listen(PORT,()=>{
+  console.log(`server listening at ${PORT}`);
+})
+
+//runCommand()

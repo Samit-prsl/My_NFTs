@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodemon scripts/test.ts",
     "mintNFT": "nodemon scripts/mintNFT.ts",
-    "upload" : "nodemon index.ts"
+    "dev": "nodemon index.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "@alch/alchemy-web3": "^1.4.7",
     "@openzeppelin/contracts": "^5.0.1",
     "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
     "axios": "^1.6.7",
     "form-data": "^4.0.0",
     "hardhat": "^2.19.5",

@@ -5,7 +5,7 @@ const web3 = createAlchemyWeb3(process.env.ALCHEMY_URI!)
 
 import contract from '../artifacts/contracts/ThalaCoin.sol/ThalaCoin.json'
 
-const contractAddress = "0xFA6aDd7f354eE48a8cA0FB5FF145CE480066Ca16"
+const contractAddress = "0xf0634B94663630fDF4880044097B057EA2Fb9D42"
 const NFT = new web3.eth.Contract(contract.abi as any,contractAddress)
 
 async function mintNFT(tokenURI:any) {

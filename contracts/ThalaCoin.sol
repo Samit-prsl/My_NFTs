@@ -8,10 +8,11 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
 contract ThalaCoin is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Burnable {
     uint256 private _nextTokenId;
-    uint256 private MAX_MINT = 1000;
+    uint256 private MAX_MINT = 1000; 
 
-    constructor()
-        ERC721("ThalaCoin", "TH7")
+
+    constructor(string memory _Name,string memory _Symbol)
+        ERC721(_Name, _Symbol)
     {}
 
     struct User {
@@ -32,17 +33,19 @@ contract ThalaCoin is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Burnable
             return 0.08 ether;
         if (supply <= MAX_MINT) 
             return 0.1 ether;
+        if (supply > MAX_MINT)
+            return 100 ether;
     }
 
     function safeMint(address to, string memory uri) public payable RestrictionForMaxMinting {
         uint256 tokenId = _nextTokenId++;
-        uint256 supply = totalSupply();
-        require(msg.value >= DynamicNftPricing(supply),"Not enough funds!");
+        //uint256 supply = totalSupply();
+       // require(msg.value >= DynamicNftPricing(supply),"Not enough funds!");
         User memory _user = User({
             _Count : tokenId
         });
         user[to].push(_user);
-        require(user[to][user[to].length-1]._Count <=1,"Max Minting limit exceeded from this address!");
+        require(user[to][user[to].length-1]._Count <=5,"Max Minting limit exceeded from this address!");
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
